@@ -1,0 +1,31 @@
+pub fn annotate(minefield: &[&str]) -> Vec<String> {
+	#[rustfmt::skip]
+	let adjacent = |r, c| {
+		[(r-1,c-1), (r-1,c), (r-1,c+1),
+		 (r,  c-1),          (r,  c+1),
+		 (r+1,c-1), (r+1,c), (r+1,c+1),]
+	};
+
+	let mut out = Vec::new();
+	let w = minefield.len();
+	let h = if w > 0 { minefield[0].len() } else { 0 };
+
+	for (i, row) in minefield.iter().enumerate() {
+		let mut outrow = String::with_capacity(row.len());
+		for (j, col) in row.bytes().enumerate() {
+			if col == b'*' {
+				outrow.push('*');
+				continue;
+			}
+
+			let mut count: u8 = adjacent(i as i8, j as i8).iter()
+				.filter(|(r, c)| 0 <= *r && (*r as usize) < w && 0 <= *c && (*c as usize) < h)
+				.filter(|(r, c)| minefield[*r as usize].as_bytes()[*c as usize] == b'*')
+                .count();
+
+			outrow.push(if count == 0 { ' ' } else { (count + b'0') as char });
+		}
+		out.push(outrow);
+	}
+	return out;
+}
