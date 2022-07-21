@@ -19,9 +19,7 @@ func licenseType(numberOfWheels n: Int) -> String {
 }
 
 func registrationFee(msrp: Int, yearsOld a: Int) -> Int {
-	if a >= 10 {
-		return 25
-	}
+	guard a < 10 else { return 25 }
 
 	let price = msrp > 25000 ? msrp : 25000
 	return (price - a * price / 10) / 100
