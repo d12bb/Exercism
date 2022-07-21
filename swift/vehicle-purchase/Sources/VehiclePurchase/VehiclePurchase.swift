@@ -1,9 +1,9 @@
 func canIBuy(vehicle v: String, price p: Double, monthlyBudget b: Double) -> String {
 	let monthly = p / 60
 	switch b - monthly {
-	case 0...: return "Yes! I'm getting a " + v
-	case -100 ..< 0: return "I'll have to be frugal if I want a " + v
-	case ..<(-100): return "Darn! No " + v + " for me"
+	case 0...: return "Yes! I'm getting a \(v)"
+	case -100 ..< 0: return "I'll have to be frugal if I want a \(v)"
+	case ..<(-100): return "Darn! No \(v) for me"
 	default: return "error"
 	}
 }
